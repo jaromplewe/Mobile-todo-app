@@ -4,6 +4,7 @@ import { Keyboard, KeyboardAvoidingView, Platform, StyleSheet, Text, TextInput, 
 import Task from './components/Task';
 
 export default function App() {
+  
   const [task, setTask] = useState();
   const [taskItems, setTaskItems] = useState([]);
 
@@ -33,7 +34,10 @@ export default function App() {
             taskItems.map((item, index) => {
               return (
                 <TouchableOpacity key={index} onPress={() => completeTask(index)}>
-                  <Task text={item} />
+                  <Task 
+                    text={item} 
+                    taskItems={taskItems}
+                  />
                 </TouchableOpacity>
               )
             })
@@ -47,13 +51,23 @@ export default function App() {
         behavior={Platform.OS === "ios" ? "padding" : "height"}
         style={styles.writeTaskWrapper}
       >
-        <TextInput style={styles.input} placeholder={"Write a task"} value={task} onChangeText={text => setTask(text)}/>
+        <TextInput 
+          style={styles.input} 
+          placeholder={"Write a task"} 
+          value={task} 
+          onChangeText={text => setTask(text)}
+        />
 
-        <TouchableOpacity onPress={() => handleAddTask()}>
+        <TouchableOpacity 
+          onPress={() => {
+            if (task) handleAddTask()
+          }}
+        >
           <View style={styles.addWrapper}>
             <Text style={styles.addText}>+</Text>
           </View>
         </TouchableOpacity>
+
       </KeyboardAvoidingView>
 
     </View>
