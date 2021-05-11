@@ -1,7 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
-import { Keyboard, KeyboardAvoidingView, Platform, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
-import Task from './components/Task';
+import { Keyboard, KeyboardAvoidingView, Platform, StyleSheet, Text, TextInput, TouchableHighlight, TouchableOpacity, View } from 'react-native';
+import TaskCard from './components/TaskCard';
 
 export default function App() {
   
@@ -14,10 +14,8 @@ export default function App() {
     setTask(null);
   }
 
-  const completeTask = (index) => {
-    let itemsCopy = [...taskItems];
-    itemsCopy.splice(index, 1);
-    setTaskItems(itemsCopy);
+  const editTaskName = (i) => {
+    // console.log(taskItems[i])
   }
 
   return (
@@ -33,18 +31,24 @@ export default function App() {
           {
             taskItems.map((item, index) => {
               return (
-                <TouchableOpacity key={index} onPress={() => completeTask(index)}>
-                  <Task 
+                <TouchableHighlight 
+                  key={index}
+                  onLongPress={editTaskName(index)}
+                >
+                  <TaskCard
+                    index={index}
                     text={item} 
+                    setTask={setTask}
                     taskItems={taskItems}
+                    setTaskItems={setTaskItems}
                   />
-                </TouchableOpacity>
+                </TouchableHighlight>
               )
             })
           }
         </View>
-
       </View>
+
 
       {/* Write tasks section */}
       <KeyboardAvoidingView
